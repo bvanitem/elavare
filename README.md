@@ -3,11 +3,12 @@
 - [Google Fonts Documentation](https://pub.dev/packages/google_fonts)
    - textTheme: GoogleFonts.montserratTextTheme(TextTheme())
 - [Flutter Documentation](https://docs.flutter.dev/ui)
-   - 
+   - flutter pub add go_router
+   - flutter pub add firebase_auth
 - [Firebase Documentation](https://firebase.google.com/docs/auth/flutter/start)
    - flutter pub add firebase_auth
    - import 'package:firebase_auth/firebase_auth.dart';
-   
+
 
 This is the info page to assist in the development of the elavare app.
 
