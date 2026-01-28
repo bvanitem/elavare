@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// 
+import 'screens/loginScreen.dart';
+import 'screens/registerScreen.dart';
+import 'screens/homeScreen.dart';
+
 class Elavare extends StatelessWidget {
-  const Elavare({super.key});
+  Elavare({super.key});
+
+  final GoRouter _router = GoRouter(
+    initialLocation: '/login',
+    routes: [
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/register',
+        builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const HomeScreen(),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
-    const String appTitle = 'Elavare';
-    return MaterialApp(
-      title: 'Elavare',
-      home: Scaffold(
-        appBar: AppBar(title: const Text(appTitle)),
-        body: const Center(
-          child: Text('Hello'),
-        ),
-      ),
+    return MaterialApp.router(
+      title: 'Dummy Routing App',
+      routerConfig: _router,
     );
   }
 }
-
-GoRouter(
-  routes: [
-
-  ];
-);
