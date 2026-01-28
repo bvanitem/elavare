@@ -1,8 +1,21 @@
+import 'package:elavare/view_models/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  final LoginViewModel viewModel;
+  const LoginScreen({required this.viewModel, super.key});
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _email = TextEditingController(
+    text: 'email@example.com',
+  );
+  final TextEditingController _password = TextEditingController(
+    text: 'password',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +24,7 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 400, 
-            ),
+            constraints: const BoxConstraints(maxWidth: 400),
             child: Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -37,7 +48,8 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 32),
 
                     // Username / Email
-                    const TextField(
+                    TextField(
+                      controller: _email,
                       decoration: InputDecoration(
                         labelText: 'Username or Email',
                         border: OutlineInputBorder(),
@@ -47,8 +59,9 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     // Password
-                    const TextField(
+                    TextField(
                       obscureText: true,
+                      controller: _password,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(),
@@ -59,7 +72,13 @@ class LoginScreen extends StatelessWidget {
 
                     // Login button
                     ElevatedButton(
-                      onPressed: () => context.go('/home'),
+                      onPressed: () async => {
+                        if (await widget.viewModel.login(_email.text, _password.text)){
+                          context.go('/home'),}
+                          else{
+                            print("couldn't login")
+                          }
+                      },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 14),
                         child: Text('Login'),

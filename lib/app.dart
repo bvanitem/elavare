@@ -1,3 +1,4 @@
+import 'package:elavare/view_models/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,7 +14,7 @@ class Elavare extends StatelessWidget {
     routes: [
       GoRoute(
         path: '/login',
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) => const LoginScreen(viewModel: LoginViewModel()),
       ),
       GoRoute(
         path: '/register',
