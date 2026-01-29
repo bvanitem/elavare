@@ -10,12 +10,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _email = TextEditingController(
-    text: 'email@example.com',
-  );
-  final TextEditingController _password = TextEditingController(
-    text: 'password',
-  );
+  final TextEditingController _email = TextEditingController(text: '');
+  final TextEditingController _password = TextEditingController(text: '');
+  bool apiHealth = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,16 +70,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     // Login button
                     ElevatedButton(
                       onPressed: () async => {
-                        if (await widget.viewModel.login(_email.text, _password.text)){
-                          context.go('/home'),}
-                          else{
-                            print("couldn't login")
-                          }
+                        if (await widget.viewModel.login(
+                          _email.text,
+                          _password.text,
+                        ))
+                          {context.go('/home')}
+                        else
+                          {
+                            // widget.viewModel.showError(),
+                          },
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 14),
                         child: Text('Login'),
                       ),
+                    ),
+                    //Icon button to test health of api... 
+                    
+                    IconButton(
+                      icon: apiHealth
+                          ? Icon(Icons.check)
+                          : Icon(Icons.rotate_left),
+                      onPressed: () async {
+                        final result = await widget.viewModel.health();
+                        setState(() {
+                          apiHealth = result;
+                        });
+                      },
                     ),
 
                     const SizedBox(height: 16),
