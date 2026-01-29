@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
 class ApiCommunicator {
-  final httpUrl = 'http://192.168.1.222';
-  final port = '3000';
+  final httpUrl = 'http://***'; //Insert your device's IP address
+  final port = '3000'; //running port of the server
   static final Logger _logger = Logger("ApiCommunicator");
 
   ApiCommunicator();
