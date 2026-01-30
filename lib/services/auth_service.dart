@@ -1,32 +1,20 @@
 import 'package:elavare/services/api_communicator.dart';
+import 'package:elavare/services/firebase_service.dart';
+import 'package:elavare/services/model/domain/user.dart';
 import 'package:elavare/services/model/net/request.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logging/logging.dart';
 
 class AuthService {
+
   AuthService();
+  FirebaseService firebaseService = FirebaseService();
   ApiCommunicator comm = ApiCommunicator();
   static final Logger _logger = Logger("authService");
 
   //Calls to api..
   Future<bool> login(String email, String password) async {
-    try {
-      final cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      print(cred.user?.uid);
-      return (cred.user != null);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-      print('Something else $e');
-    }
-    return false;
+    return firebaseService.login(email, password);
   }
 
   Future<bool> register(
@@ -35,44 +23,17 @@ class AuthService {
     String firstName,
     String lastName,
   ) async {
-    try {
-      final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      print(cred.user?.uid);
-      return (cred.user != null);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-      print('Something else $e');
+    User_? user = await firebaseService.register(email, password, firstName, lastName);
+    if (user!=null){
+      //Send user to API for registering in Firebase
+      RegisterRequest request = RegisterRequest(user, 1); 
+      comm.postCallApi('users/createUser', request.toJson(), "token");
     }
-    return false;
+    return user!=null;
   }
 
   Future<bool> checkUserExists(String email) async {
-    try {
-      //tries to sign in with dummy password just ot check if user exists.
-      final cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: "password",
-      );
-      print(cred.user?.uid);
-      return (cred.user != null);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('[${e.code}] No user found for that email.');
-        return false;
-      } else if (e.code == 'wrong-password') {
-        print('[${e.code}]Wrong password provided for that user.');
-        return true;
-      }
-      print('[${e.code}] ${e.message}');
-    }
-    return false;
+   return firebaseService.checkUserExists(email);
   }
 
   //Call this method anywhere within the app to check the connection to the API
