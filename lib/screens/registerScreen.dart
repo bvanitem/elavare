@@ -20,8 +20,8 @@ class RegisterScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextButton(
-              onPressed: () => context.go('/login'),
-              child: const Text('Back to Login'),
+              onPressed: () => context.go('/landing'),
+              child: const Text('Back to Landing'),
             ),
           ],
         ),

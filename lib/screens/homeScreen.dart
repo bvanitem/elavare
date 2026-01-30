@@ -15,8 +15,8 @@ class HomeScreen extends StatelessWidget {
             const Text('Home Screen'),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => context.go('/login'),
-              child: const Text('Logout -> Login'),
+              onPressed: () => context.go('/landing'),
+              child: const Text('Logout -> Landing'),
             ),
           ],
         ),

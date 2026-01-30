@@ -1,4 +1,5 @@
-import 'package:elavare/view_models/login_view_model.dart';
+import 'package:elavare/screens/landing_screen.dart';
+import 'package:elavare/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,11 +11,11 @@ class Elavare extends StatelessWidget {
   Elavare({super.key});
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/landing',
     routes: [
       GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(viewModel: LoginViewModel()),
+        path: '/landing',
+        builder: (context, state) => const LandingScreen(viewModel: AuthViewModel()),
       ),
       GoRoute(
         path: '/register',
@@ -30,7 +31,7 @@ class Elavare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Dummy Routing App',
+      title: 'Elavare ',
       routerConfig: _router,
     );
   }

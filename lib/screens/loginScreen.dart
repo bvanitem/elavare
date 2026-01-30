@@ -1,9 +1,9 @@
-import 'package:elavare/view_models/login_view_model.dart';
+import 'package:elavare/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
-  final LoginViewModel viewModel;
+  final AuthViewModel viewModel;
   const LoginScreen({required this.viewModel, super.key});
   @override
   State<LoginScreen> createState() => _LoginScreenState();

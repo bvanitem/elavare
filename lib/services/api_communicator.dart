@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
 class ApiCommunicator {
-  final httpUrl = 'http://***'; //Insert your device's IP address
+  final httpUrl = 'http://10.54.7.97'; //Insert your device's IP address
   final port = '3000'; //running port of the server
   static final Logger _logger = Logger("ApiCommunicator");
 
@@ -27,7 +27,7 @@ class ApiCommunicator {
     return response;
   }
 
-    Future<http.Response> postCallApi(String path, Map<String,String> request, String? token ) async {
+    Future<http.Response> postCallApi(String path, Map<String,dynamic> request, String? token ) async {
     _logger.info("calling url $httpUrl with path $path");
 
     final uri = Uri.parse('$httpUrl:$port/$path');
